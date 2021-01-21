@@ -36,7 +36,7 @@ public class EmployeesCreateServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String _token = (String)request.getParameter("_token");
-        if(_token != null && _token.equals(request.getSession().getId())){
+        if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
             Employee e = new Employee();
@@ -57,13 +57,12 @@ public class EmployeesCreateServlet extends HttpServlet {
             e.setDelete_flag(0);
 
             List<String> errors = EmployeeValidator.validate(e, true, true);
-            if(errors.size() > 0){
+            if(errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("employee", e);
                 request.setAttribute("errors", errors);
-
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
                 rd.forward(request, response);
@@ -75,9 +74,7 @@ public class EmployeesCreateServlet extends HttpServlet {
                 em.close();
 
                 response.sendRedirect(request.getContextPath() + "/employees/index");
-
             }
-
         }
     }
 
